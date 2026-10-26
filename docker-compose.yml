@@ -1,0 +1,84 @@
+# Запуск: cp .env.example .env  (заполнить)  →  docker compose up -d --build
+# С HTTPS: docker compose --profile proxy up -d --build
+name: mamini-petelki
+
+services:
+  backend:
+    build:
+      context: ./backend
+    image: mamini-petelki-backend
+    env_file: .env
+    environment:
+      # Значения ниже перекрывают .env: пути внутри контейнера и работа за прокси.
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      DATABASE_URL: sqlite:////app/data/app.db
+      UPLOADS_DIR: /app/uploads
+      # Backend доступен только frontend-у (порт наружу не публикуется), поэтому
+      # X-Forwarded-For от Next.js/Caddy можно учитывать для лимита попыток входа.
+      TRUST_PROXY: "true"
+      # CSRF-проверка Origin: Origin браузера должен совпасть с публичным адресом сайта.
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}}
+    volumes:
+      - app_data:/app/data
+      - app_uploads:/app/uploads
+    expose:
+      - "8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=4).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        BACKEND_URL: http://backend:8000
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-http://localhost:3000}
+        NEXT_PUBLIC_MAX_URL: ${NEXT_PUBLIC_MAX_URL:-}
+        NEXT_PUBLIC_TELEGRAM_URL: ${NEXT_PUBLIC_TELEGRAM_URL:-}
+        NEXT_PUBLIC_VK_URL: ${NEXT_PUBLIC_VK_URL:-}
+    image: mamini-petelki-frontend
+    # Секреты backend (.env) во frontend не передаются.
+    environment:
+      BACKEND_URL: http://backend:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      # По умолчанию только localhost: снаружи ходит Caddy (иначе TRUST_PROXY=true позволяет
+      # обойти защиту входа подменой X-Forwarded-For).
+      - "${FRONTEND_HOST:-127.0.0.1}:${FRONTEND_PORT:-3000}:3000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:3000/robots.txt"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2-alpine
+    profiles: ["proxy"]
+    environment:
+      SITE_DOMAIN: ${SITE_DOMAIN:-localhost}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      frontend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  app_data:
+  app_uploads:
+  caddy_data:
+  caddy_config:

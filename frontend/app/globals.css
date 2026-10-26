@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: #fbf6f0;
+  --color-burgundy: #7b2346;
+  --color-ink: #3b2a33;
+  --color-muted: #5e4a54;
+  --color-muted-2: #6b5560;
+  --color-pink: #d98fa8;
+  --color-pink-soft: #f6e3e8;
+  --color-pink-soft-2: #f1d5dd;
+  --color-cream: #f3e6c8;
+  --color-gold: #c99a4b;
+  --color-line: #e6d3c6;
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+  /* брейкпоинты из спеки: ≤640 мобайл, ≤900 планшет */
+  --breakpoint-sm: 40.0625rem;
+  --breakpoint-md: 56.3125rem;
+  --ease-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+:root {
+  /* базовая задержка входных анимаций страницы: ждём загрузочный экран */
+  --enter-base: 2.5s;
+}
+html[data-ready="1"] {
+  --enter-base: 0.1s;
+}
+
+html {
+  background: #fbf6f0;
+}
+body {
+  margin: 0;
+  background: #fbf6f0;
+  color: #3b2a33;
+  font-family: var(--font-nunito), system-ui, sans-serif;
+  overflow-x: clip;
+}
+
+:focus-visible {
+  outline: 3px solid #7b2346;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+footer :focus-visible {
+  outline-color: #f3e6c8;
+}
+
+/* ---------- keyframes ---------- */
+@keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes drop { from { opacity: 0; transform: translateY(-18px); } to { opacity: 1; transform: none; } }
+@keyframes draw { from { stroke-dashoffset: 2400; } to { stroke-dashoffset: 0; } }
+@keyframes drift { from { transform: translateX(0); } to { transform: translateX(-50px); } }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes wobble { 0% { transform: rotate(0); } 25% { transform: rotate(-5deg) scale(1.04); } 60% { transform: rotate(4deg) scale(1.04); } 100% { transform: rotate(0) scale(1); } }
+@keyframes wiggle { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-14deg); } 70% { transform: rotate(10deg); } }
+@keyframes loaderOut { from { opacity: 1; visibility: visible; } to { opacity: 0; visibility: hidden; } }
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes rock { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+@keyframes unwind { 0% { stroke-dashoffset: 160; } 60% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -160; } }
+@keyframes float { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+@keyframes glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(217, 143, 168, 0); } 50% { box-shadow: 0 0 0 10px rgba(217, 143, 168, 0.35); } }
+@keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.4); } 70% { transform: scale(0.9); } 100% { transform: scale(1); } }
+
+/* ---------- загрузочный экран ---------- */
+.loader { animation: loaderOut 0.7s ease 1.8s both; pointer-events: none; }
+.loader .ball { transform-box: fill-box; transform-origin: center; animation: spin 2.4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite; }
+.loader .needles { transform-box: fill-box; transform-origin: center; animation: rock 1.2s ease-in-out infinite; }
+.loader .unwind { stroke-dasharray: 160; animation: unwind 2.4s ease-in-out infinite; }
+
+/* ---------- вход ---------- */
+.anim-drop { animation: drop 0.9s var(--ease-soft) 1.9s both; }
+.anim-hero-card { animation: rise 1s var(--ease-soft) 2.3s both, float 7s ease-in-out 3.4s infinite alternate; }
+.anim-hero-btn { animation: rise 1s var(--ease-soft) 2.55s both, glow 3.2s ease-in-out 3.6s infinite; }
+.anim-drift { animation: drift 6s linear infinite alternate; }
+.anim-rise { animation: rise 0.9s var(--ease-soft) var(--enter-base) both; }
+.anim-rise-item { animation: rise 0.9s var(--ease-soft) calc(var(--enter-base) + var(--stagger, 0s)) both; }
+
+/* ---------- нить ---------- */
+.thread-pink { stroke-dasharray: 2400; animation: draw 3.2s cubic-bezier(0.5, 0, 0.2, 1) 2.8s both; }
+.thread-gold { animation: draw 3.2s cubic-bezier(0.5, 0, 0.2, 1) 3.1s both; }
+.marquee-track { animation: marquee 28s linear infinite; }
+
+/* ---------- логотип и меню ---------- */
+.logo:hover img, .logo:focus-visible img { animation: wobble 0.8s ease-in-out; }
+
+.nav-link { position: relative; }
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 6px; right: 6px; bottom: 8px;
+  height: 3px;
+  border-radius: 3px;
+  background: repeating-linear-gradient(90deg, #d98fa8 0 7px, transparent 7px 11px);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease-soft);
+}
+@media (min-width: 641px) { .nav-link::after { left: 12px; right: 12px; } }
+.nav-link:hover::after, .nav-link:focus-visible::after, .nav-link[aria-current]::after { transform: scaleX(1); }
+
+/* ---------- кнопки-заливки ---------- */
+.sweep {
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 0% 100%;
+  transition: background-size 0.45s var(--ease-soft), color 0.35s;
+}
+.sweep:hover, .sweep:focus-visible { background-size: 100% 100%; }
+.sweep-b { background-image: linear-gradient(#7b2346, #7b2346); }
+.sweep-b:hover, .sweep-b:focus-visible { color: #fbf6f0; }
+.sweep-c { background-image: linear-gradient(#f3e6c8, #f3e6c8); }
+.sweep-c:hover, .sweep-c:focus-visible { color: #7b2346; }
+.sweep-c:hover svg, .sweep-c:focus-visible svg { animation: wiggle 0.6s ease-in-out; }
+
+/* ---------- карточка ---------- */
+.card { transition: transform 0.45s var(--ease-soft); }
+.card:hover, .card:focus-within { transform: translateY(-8px); }
+.card .frame { transition: box-shadow 0.45s; box-shadow: 0 0 0 rgba(123, 35, 70, 0); }
+.card:hover .frame, .card:focus-within .frame { box-shadow: 0 22px 40px -18px rgba(123, 35, 70, 0.35); }
+.card .ph { transition: transform 0.8s var(--ease-soft); }
+.card:hover .ph, .card:focus-within .ph { transform: scale(1.07); }
+.card .hint { opacity: 0; transform: translateY(10px); transition: opacity 0.35s, transform 0.35s; }
+.card:hover .hint, .card:focus-within .hint { opacity: 1; transform: none; }
+.heart { transition: background-color 0.25s, transform 0.2s; }
+.heart:hover { transform: scale(1.1); }
+.heart-pop { animation: pop 0.5s ease-out; }
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .loader { display: none !important; }
+}
+
+/* ---------- страницы контента ---------- */
+.float-slow { animation: float 4s ease-in-out infinite alternate; }
+.past .frame { filter: grayscale(0.7); }
+dialog.modal::backdrop { background: rgba(59, 42, 51, 0.65); }

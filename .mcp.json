@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "magic": {
+      "command": "npx",
+      "args": ["-y", "@21st-dev/magic@latest"],
+      "env": { "API_KEY": "${TWENTYFIRST_API_KEY}" }
+    },
+    "shadcn": {
+      "command": "npx",
+      "args": ["shadcn@latest", "mcp"]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    }
+  }
+}

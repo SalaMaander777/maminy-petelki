@@ -1,0 +1,16 @@
+{
+  "name": "mamini-petelki-e2e",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=desktop-1440 --project=tablet-768 --project=mobile-390 --project=mobile-375",
+    "lighthouse": "lighthouse http://localhost:3100/ --chrome-flags=\"--headless=new\" --output=json --output-path=./reports/lh-home"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.0",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.0.0",
+    "lighthouse": "^12.0.0"
+  }
+}

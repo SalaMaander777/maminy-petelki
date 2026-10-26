@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Мамины петельки — каталог</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FBF6F0;font-family:'Nunito',system-ui,sans-serif;color:#3B2A33;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+
+@keyframes rise{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+@keyframes drop{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:none}}
+@keyframes wobble{0%{transform:rotate(0)}25%{transform:rotate(-5deg) scale(1.04)}60%{transform:rotate(4deg) scale(1.04)}100%{transform:rotate(0) scale(1)}}
+@keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.4)}70%{transform:scale(.9)}100%{transform:scale(1)}}
+@keyframes wiggle{0%,100%{transform:rotate(0)}30%{transform:rotate(-14deg)}70%{transform:rotate(10deg)}}
+@keyframes loaderOut{from{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes rock{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes unwind{0%{stroke-dashoffset:160}60%{stroke-dashoffset:0}100%{stroke-dashoffset:-160}}
+
+.loader svg .ball{transform-box:fill-box;transform-origin:center;animation:spin 2.4s cubic-bezier(.45,.05,.55,.95) infinite}
+.loader svg .needles{transform-box:fill-box;transform-origin:center;animation:rock 1.2s ease-in-out infinite}
+.loader svg .unwind{stroke-dasharray:160;animation:unwind 2.4s ease-in-out infinite}
+.logo:hover img{animation:wobble .8s ease-in-out}
+
+.nav a{position:relative;padding:14px 12px;min-height:44px;box-sizing:border-box}
+.nav a::after{content:'';position:absolute;left:12px;right:12px;bottom:8px;height:3px;border-radius:3px;background:repeating-linear-gradient(90deg,#D98FA8 0 7px,transparent 7px 11px);transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.nav a:hover::after,.nav a:focus-visible::after,.nav a[aria-current]::after{transform:scaleX(1)}
+
+.sweep{background-repeat:no-repeat;background-position:left center;background-size:0% 100%;transition:background-size .45s cubic-bezier(.2,.7,.2,1),color .35s}
+.sweep:hover,.sweep:focus-visible{background-size:100% 100%}
+.sweep-b{background-image:linear-gradient(#7B2346,#7B2346)}
+.sweep-b:hover,.sweep-b:focus-visible{color:#FBF6F0}
+.sweep-c{background-image:linear-gradient(#F3E6C8,#F3E6C8)}
+.sweep-c:hover,.sweep-c:focus-visible{color:#7B2346}
+.sweep-c:hover svg{animation:wiggle .6s ease-in-out}
+
+.card{transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.card:hover{transform:translateY(-8px)}
+.card .frame{transition:box-shadow .45s;box-shadow:0 0 0 rgba(123,35,70,0)}
+.card:hover .frame{box-shadow:0 22px 40px -18px rgba(123,35,70,.35)}
+.card .ph{transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.card:hover .ph{transform:scale(1.07)}
+.card .hint{opacity:0;transform:translateY(10px);transition:opacity .35s,transform .35s}
+.card:hover .hint{opacity:1;transform:none}
+.heart{transition:background .25s,transform .2s}
+.heart:hover{transform:scale(1.1)}
+
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}.nav{gap:16px!important;font-size:17px!important}}
+@media (max-width:640px){
+.hdr{padding:20px 16px 0!important}
+.hdr img{width:132px!important}
+.nav{gap:0 2px!important;padding:4px 12px!important;font-size:13px!important;letter-spacing:.06em!important}
+.nav a{padding:14px 6px!important}
+.nav a::after{left:6px!important;right:6px!important}
+.sec{padding-left:16px!important;padding-right:16px!important;padding-top:40px!important}
+.cat-head{flex-direction:column!important;gap:6px!important}
+.cat-head h1{font-size:30px!important}
+.grid{grid-template-columns:minmax(0,1fr)!important;gap:36px!important}
+.foot{padding:48px 16px!important;margin-top:64px!important}
+.foot h2{font-size:28px!important}
+.foot p{font-size:15px!important}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .loader{display:none!important}
+}
+</style>
+</helmet>
+
+<div class="loader" aria-hidden="true" style="position:fixed;inset:0;z-index:60;background:#FBF6F0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;animation:loaderOut .7s ease 1.8s both;pointer-events:none"><svg width="200" height="200" viewBox="0 0 200 200"><path class="unwind" d="M138 122 C 165 150, 150 178, 118 182 S 66 192, 24 176" fill="none" stroke="#D98FA8" stroke-width="5" stroke-linecap="round"/><g class="ball"><circle cx="90" cy="95" r="52" fill="#D98FA8" stroke="#7B2346" stroke-width="4"/><path d="M44 82 C 70 60, 112 60, 138 86" fill="none" stroke="#F3E6C8" stroke-width="7" stroke-linecap="round"/><path d="M40 102 C 70 80, 115 82, 142 106" fill="none" stroke="#F3E6C8" stroke-width="7" stroke-linecap="round"/><path d="M48 122 C 75 102, 112 104, 134 124" fill="none" stroke="#F3E6C8" stroke-width="7" stroke-linecap="round"/></g><g class="needles"><line x1="40" y1="28" x2="152" y2="150" stroke="#C99A4B" stroke-width="5" stroke-linecap="round"/><circle cx="40" cy="28" r="7" fill="#C99A4B" stroke="#7B2346" stroke-width="2"/><line x1="148" y1="28" x2="36" y2="150" stroke="#C99A4B" stroke-width="5" stroke-linecap="round"/><circle cx="148" cy="28" r="7" fill="#C99A4B" stroke="#7B2346" stroke-width="2"/></g></svg><div style="font-size:16px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#7B2346">Вяжем уют…</div></div>
+
+<div style="width:100%;max-width:1440px;margin:0 auto;display:flex;flex-direction:column">
+
+  <header class="hdr" style="display:flex;flex-direction:column;align-items:center;padding:36px 80px 0;gap:8px;animation:drop .9s cubic-bezier(.2,.7,.2,1) 1.9s both">
+    <a class="logo" href="Main.dc.html" aria-label="Мамины петельки — на главную"><img src="/_blob/3fbd01729033a602a198dba4ecff30db" alt="Мамины петельки" style="width:190px;height:auto;display:block"></a>
+    <nav class="nav" aria-label="Основное меню" style="display:flex;gap:40px;padding:6px 28px;margin:10px 0 18px;background:#F6E3E8;border-radius:999px;font-size:24px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#7B2346;flex-wrap:wrap;justify-content:space-around;width:100%;box-sizing:border-box">
+      <a href="Catalog.dc.html" aria-current="page">Каталог</a>
+      <a href="#masterclasses">Мастер-классы</a>
+      <a href="#projects">Проекты</a>
+      <a href="#reviews">Отзывы</a>
+      <a href="#sales">Акции</a>
+    </nav>
+    <div style="width:100%;height:1px;background:#E6D3C6"></div>
+  </header>
+
+  <section class="sec" style="padding:64px 80px 0">
+    <div class="cat-head" style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:40px;animation:rise .9s cubic-bezier(.2,.7,.2,1) 2.3s both">
+      <h1 style="margin:0;font-size:44px;font-weight:800;color:#7B2346">Каталог</h1>
+      <span style="font-size:15px;color:#6B5560">Нажмите на сердечко, чтобы сохранить понравившееся</span>
+    </div>
+    <div class="grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px 32px">
+      <sc-for list="{{items}}" as="it" hint-placeholder-count="6">
+        <article class="card" style="display:flex;flex-direction:column;gap:18px;animation:rise .9s cubic-bezier(.2,.7,.2,1) {{it.delay}} both">
+          <div class="frame" style="position:relative;aspect-ratio:4/5;border-radius:20px;overflow:hidden;background:#F1E4D0">
+            <div class="ph" style="width:100%;height:100%;background:{{it.bg}};display:flex;align-items:flex-start;padding:18px;box-sizing:border-box;font-size:13px;font-weight:600;color:#6B5560;letter-spacing:.08em">[ФОТО: {{it.name}}]</div>
+            <button class="heart" onClick="{{it.toggle}}" aria-pressed="{{it.favOn}}" aria-label="Сохранить: {{it.name}}" style="position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;background:{{it.heartBg}};display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(59,42,51,.15)">
+              <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true" style="animation:{{it.heartAnim}}" fill="{{it.heartFill}}" stroke="#7B2346" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.5s-8-4.9-8-11A4.5 4.5 0 0 1 12 7a4.5 4.5 0 0 1 8 2.5c0 6.1-8 11-8 11z"/></svg>
+            </button>
+            <div class="hint" style="position:absolute;left:14px;bottom:14px;background:#FBF6F0;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:800;color:#7B2346">Вяжем на заказ</div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <h2 style="margin:0;font-size:22px;font-weight:800;color:#3B2A33">{{it.name}}</h2>
+            <p style="margin:0;font-size:15px;line-height:1.5;color:#5E4A54">[Короткое описание изделия в 1–2 строки]</p>
+            <dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px;color:#5E4A54">
+              <dt style="font-weight:800;color:#7B2346">Размер</dt><dd style="margin:0">[размер]</dd>
+              <dt style="font-weight:800;color:#7B2346">Материалы</dt><dd style="margin:0">[состав пряжи]</dd>
+              <dt style="font-weight:800;color:#7B2346">Срок</dt><dd style="margin:0">[срок изготовления]</dd>
+            </dl>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid #E6D3C6">
+              <span style="font-size:24px;font-weight:800;color:#7B2346">[цена] ₽</span>
+              <a href="#contacts" class="sweep sweep-b" style="border:2px solid #7B2346;color:#7B2346;border-radius:999px;padding:9px 22px;font-size:14px;font-weight:800;min-height:44px;box-sizing:border-box;display:flex;align-items:center">Заказать</a>
+            </div>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer id="contacts" class="foot" style="margin-top:120px;background:#7B2346;color:#FBF6F0;padding:72px 80px;display:flex;flex-direction:column;align-items:center;gap:32px;text-align:center">
+    <h2 style="margin:0;font-size:36px;font-weight:800">Контакты</h2>
+    <p style="margin:0;font-size:18px;line-height:1.5;max-width:520px;color:#F3E6C8">Напишите нам в любой удобный мессенджер — обсудим изделие, размер и сроки.</p>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center">
+      <a href="#" class="sweep sweep-c" style="display:flex;align-items:center;gap:12px;border:2px solid #F3E6C8;border-radius:999px;padding:14px 30px;font-size:17px;font-weight:800;min-height:44px;box-sizing:border-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>
+        Макс
+      </a>
+      <a href="#" class="sweep sweep-c" style="display:flex;align-items:center;gap:12px;border:2px solid #F3E6C8;border-radius:999px;padding:14px 30px;font-size:17px;font-weight:800;min-height:44px;box-sizing:border-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.5 3.5 2.5 11l6 2.2L10.5 20l3-4 4.5 3.5 3.5-16z"/></svg>
+        Telegram
+      </a>
+      <a href="#" class="sweep sweep-c" style="display:flex;align-items:center;gap:12px;border:2px solid #F3E6C8;border-radius:999px;padding:14px 30px;font-size:17px;font-weight:800;min-height:44px;box-sizing:border-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M7 9c.4 4 2.4 6 5 6V9m0 3c1.8-.2 3-1.6 3.6-3M12 12c1.6.4 2.8 1.6 3.6 3"/></svg>
+        ВКонтакте
+      </a>
+    </div>
+    <div style="font-size:14px;color:#E6CFD6;padding-top:24px;border-top:1px solid rgba(243,230,200,.3);width:100%">© Мамины петельки · вязаные изделия ручной работы</div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":2100}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { fav: {} };
+  }
+  renderVals() {
+    const tints = [
+      'repeating-linear-gradient(135deg,#F1D5DD 0 18px,#F6E3E8 18px 36px)',
+      'repeating-linear-gradient(135deg,#F3E6C8 0 18px,#F8EFDB 18px 36px)',
+      'repeating-linear-gradient(135deg,#EBCBD5 0 18px,#F3DDE3 18px 36px)'
+    ];
+    const names = ['Плед', 'Шапка', 'Свитер', 'Носки', 'Игрушка', 'Шарф'];
+    const fav = this.state.fav || {};
+    const items = names.map((name, i) => {
+      const on = !!fav[name];
+      return {
+        name,
+        bg: tints[i % 3],
+        delay: (2.5 + (i % 3) * 0.15 + Math.floor(i / 3) * 0.25) + 's',
+        favOn: on,
+        heartBg: on ? '#7B2346' : '#FBF6F0',
+        heartFill: on ? '#D98FA8' : 'none',
+        heartAnim: on ? 'pop .5s ease-out' : 'none',
+        toggle: () => this.setState({ fav: { ...fav, [name]: !on } })
+      };
+    });
+    return { items };
+  }
+}
+</script>
+</body>
+</html>

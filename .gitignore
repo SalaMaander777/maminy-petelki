@@ -1,0 +1,23 @@
+.env
+.env.*
+!.env.example
+node_modules/
+.next/
+__pycache__/
+.venv/
+*.db
+.DS_Store
+e2e/screenshots/
+.claude/settings.local.json
+
+backend/data/
+backend/uploads/
+.pytest_cache/
+.ruff_cache/
+
+# e2e-артефакты
+e2e/reports/
+e2e/results.json
+e2e/axe-results.json
+e2e/test-results/
+e2e/playwright-report/

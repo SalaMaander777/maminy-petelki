@@ -1,0 +1,14 @@
+node_modules/
+.next/
+out/
+coverage/
+tests/
+*.tsbuildinfo
+.env
+.env.*
+.git
+.DS_Store
+Dockerfile
+.dockerignore
+README.md
+AGENTS.md
