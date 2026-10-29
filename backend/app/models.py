@@ -1,6 +1,7 @@
-from datetime import date, datetime
+from datetime import date
 from typing import Any, Dict, List, Optional
 
+from pydantic import NaiveDatetime
 from sqlalchemy import JSON, Column
 from sqlmodel import Field, SQLModel
 
@@ -22,7 +23,7 @@ class MasterClass(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
     title: str
     description: str = ""
-    starts_at: Optional[datetime] = None
+    starts_at: Optional[NaiveDatetime] = None
     duration: Optional[str] = None
     price: Optional[int] = None
     seats: Optional[int] = None
