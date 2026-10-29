@@ -74,7 +74,13 @@ jobs:
           SSH_PATH: ${{ secrets.DEPLOY_PATH }}
           SSH_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
         run: |
+          for v in SSH_KEY SSH_HOST SSH_USER SSH_PATH SSH_KNOWN_HOSTS; do
+            [ -n "${!v}" ] || { echo "::error::Секрет для $v пустой или не задан"; exit 1; }
+          done
           install -m 700 -d ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/id_deploy && chmod 600 ~/.ssh/id_deploy
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          ssh -i ~/.ssh/id_deploy "$SSH_USER@$SSH_HOST" "cd '$SSH_PATH' && ./scripts/deploy.sh"
+          printf '%s\n' "$SSH_KEY" | tr -d '\r' > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          printf '%s\n' "$SSH_KNOWN_HOSTS" | tr -d '\r' > ~/.ssh/known_hosts
+          ssh-keygen -y -f ~/.ssh/id_deploy > /dev/null \
+            || { echo "::error::DEPLOY_SSH_KEY не является корректным приватным ключом (вставьте файл целиком, со строками BEGIN и END)"; exit 1; }
+          ssh -i ~/.ssh/id_deploy -o BatchMode=yes -o ConnectTimeout=20 "$SSH_USER@$SSH_HOST" "cd '$SSH_PATH' && ./scripts/deploy.sh"
